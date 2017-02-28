@@ -27,6 +27,26 @@ for the English Day activity */
 //     "answers" : ["ago", "since", "for", "in"]
 // }]
 
+function shuffle(array) {
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
+
 var p5Object = {
 	"questionsAndAnswers" : [{
 		"question": "Ms. Chan _____________ a concert in England two years ago.",
@@ -55,14 +75,24 @@ var p5Object = {
 	}],
 	display : function() {
 		//Get random number equal to length of array (number of Q&A pairs)
-		var randomLimit = (p5Object.questionsAndAnswers.length);
-		var randomIndex = Math.floor(Math.random()* randomLimit + 1);
-		console.log(randomIndex);
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random()* randomLimit);
 		//get the question and the answer set:
-		var currentQuestion = p5Object.questionsAndAnswers[randomIndex].question;
-		console.log(currentQuestion);
-		//output the question and answers to the DOM - when you've set the html come ack and do this:
-
-
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append(currentQuestion);
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append(currentOption);
+		}
 	}
 }
+p5Object.display();
