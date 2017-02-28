@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- This tells the browser how to read the document. -->
+  <meta charset="utf-8">
+  <!-- Tells the browser what the title of this page should be. -->
+  <title>grammarExpert</title>
+  <!-- Load the page styles. -->
+  <link href="css/style.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+  <div id="main">
+    <!--
+    Everything from here to the <script> tag below is the skeleton of your
+    website. Your code will add information to each of the sections of the
+    resume below. You can pretty easily figure out what each section will
+    display by looking at the id or at what's written between the <h2> tags.
+    -->
+    <div id="" class="center-content clear-fix">
+      Hi
+    </div>
+  </div>
+
+  <!-- JavaScript includes: -->
+  <script src="js/jQuery.js"></script>
+  <script src="data.js"></script>
+  <script>
+    if(document.getElementsByClassName('flex-item').length === 0) {
+      document.getElementById('topContacts').style.display = 'none';
+    }
+    if(document.getElementsByTagName('h1').length === 0) {
+      document.getElementById('header').style.display = 'none';
+    }
+    if(document.getElementsByClassName('work-entry').length === 0) {
+      document.getElementById('workExperience').style.display = 'none';
+    }
+    if(document.getElementsByClassName('project-entry').length === 0) {
+      document.getElementById('projects').style.display = 'none';
+    }
+    if(document.getElementsByClassName('education-entry').length === 0) {
+      document.getElementById('education').style.display = 'none';
+    }
+    if(document.getElementsByClassName('flex-item').length === 0) {
+      document.getElementById('lets-connect').style.display = 'none';
+    }
+    if(document.getElementById('map') === null) {
+      document.getElementById('mapDiv').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
