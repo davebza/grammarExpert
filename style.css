@@ -1,0 +1,11 @@
+body {
+    color: gray;
+}
+
+#question {
+    color: red;
+}
+
+#answer-radio {
+    color: blue;
+}
