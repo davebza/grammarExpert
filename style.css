@@ -7,10 +7,15 @@ body {
     padding-top: 5em;
 }
 
+h1 {
+    font-size: 60px;
+}
+
 #pictureFeedback {
     padding-top: 20px;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 15px;
 }
 
 #question {
@@ -22,7 +27,11 @@ body {
 #answer-radio {
     padding-top: 1em;
     padding-left: 10em;
-    color: blue;
+    color: black;
     font-family:'Pangolin', serif;
     text-align: left;
+}
+
+.button-area {
+    padding-top: 25px;
 }
