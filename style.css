@@ -1,12 +1,28 @@
 body {
     color: gray;
     text-align: center;
+    font-family:'Pangolin', serif;
+    background-image: url("images/background.png");
+    background-size: 1024px 768px;
+    padding-top: 5em;
+}
+
+#pictureFeedback {
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #question {
     color: red;
+    padding-top: 4em;
+    font-family:'Pangolin', serif;
 }
 
 #answer-radio {
+    padding-top: 1em;
+    padding-left: 10em;
     color: blue;
+    font-family:'Pangolin', serif;
+    text-align: left;
 }
