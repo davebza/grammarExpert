@@ -65,7 +65,7 @@ var p5Object = {
 			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
 		}
         //Make a button to submit the form:
-        $('form').append('<button type="button" id="button" class="btn btn-success">OK!</button>');
+        $('.button-area').append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
         //Check the answer submitted:
         $('button').click(function(){
             var studentInput = $("input[name='studentAnswer']:checked").val();
