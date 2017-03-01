@@ -4,7 +4,6 @@ body {
     font-family:'Pangolin', serif;
     background-image: url("images/background.png");
     background-size: 1024px 768px;
-    padding-top: 5em;
 }
 
 h1 {
@@ -19,14 +18,14 @@ h1 {
 }
 
 #question {
-    color: red;
+    color: black;
     padding-top: 4em;
     font-family:'Pangolin', serif;
 }
 
 #answer-radio {
     padding-top: 1em;
-    padding-left: 10em;
+    padding-left: 1em;
     color: black;
     font-family:'Pangolin', serif;
     text-align: left;
