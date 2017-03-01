@@ -64,9 +64,20 @@ var p5Object = {
 			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
 			$('#answer-radio').append(currentOption);
 		}
+        //Make a button to submit the form:
         $('form').append('<button type="button" id="button">Click</button>');
+        //Check the answer submitted:
         $('button').click(function(){
-            $('form').append("Hya");
+            var radioValue = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (radioValue){
+                //If yes, check the answer:
+                $('#answer-radio').append("<p>Here is your answer: " + radioValue+"</p>");
+                $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
+                if (radioValue === correctAnswer){
+                    $('#answer-radio').append("You got it!");
+                } else {$('#answer-radio').append("That's not correct. Try again.");}
+            } else {$('#answer-radio').append("<p>Please choose an answer</p>");}
         });
 	}
 }
