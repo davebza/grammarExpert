@@ -91,6 +91,79 @@ var p2Object = {
     }
 }
 
+var p3Object= {
+	"questionsAndAnswers" : [{
+		"question": "Which one is NOT a competition in the school Sports Day?",
+		"answers": ["marathon", "4X100-relay", "long jump", "60-metre race"]
+	}, {
+		"question": "What do we call the person who won the 2nd place in a competition?",
+		"answers": ["first runner-up", "second runner-up", "champion", "seconder"]
+	}, {
+		"question": "Which one is NOT an activity played in the Games Day?",
+		"answers": ["Chiness Chess", "tug-of-war", "sack race", "egg-and-spoon"]
+	}, {
+	    "question" : "What can you do in a school fun fair?",
+	    "answers" : ["eat candy floss", "dive in to the pool", "play badminton", "do revisions"]
+	}, {
+	    "question" : "I should ______ because the exam is coming.",
+	    "answers" : ["do revision", "perform on stage", "have a picnic", "play computer games"]
+	}, {
+	    "question" : "How will people prepare for the Talent Show?",
+	    "answers" : ["dress up for their performance", "buy sweets", "eat popcorn", "join the long jump competition"]
+	}, {
+	    "question" : "Teachers usually ___ in the Open Day.",
+	    "answers" : ["display some good work", "do exams", "buy trainers", "have afternoon tea"]
+	}, {
+	    "question" : "Singers ______ in the singing contest.",
+	    "answers" : ["perform on stage", "eat chocolate", "watch a film", "announce the results"]
+	}],
+	display : function() {
+		//Get random number equal to length of array (number of Q&A pairs)
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
+		//get the question and the answer set:
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
+		}
+        //Make a button to submit the form:
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        //Check the answer submitted:
+        $('button').click(function(){
+            var studentInput = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (studentInput){
+                //If yes, check the answer:
+                p3Object.checkAnswer(studentInput, correctAnswer);
+            }
+        });
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        if (studentInput === correctAnswer){
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+            $('#button-submit').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p3Object.display();
+            });
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
+    }
+}
+
 var p5Object = {
 	"questionsAndAnswers" : [{
 		"question": "Ms. Chan _____________ a concert in England two years ago.",
@@ -174,6 +247,14 @@ $('#button-p2').click(function(){
     $('#button-new-word').remove();
     $('#button-submit').remove();
     p2Object.display();
+});
+$('#button-p3').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p3Object.display();
 });
 $('#button-p5').click(function(){
     $('#question').empty();
