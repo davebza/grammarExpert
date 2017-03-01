@@ -77,12 +77,19 @@ var p5Object = {
             //else {$('#answer-radio').append("<p>Please choose an answer</p>");}
         });
 	}, checkAnswer : function(studentInput, correctAnswer) {
-        //$('#answer-radio').append("<p>Here is your answer: " + studentInput+"</p>");
-        // $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
         if (studentInput === correctAnswer){
-            //$('#answer-radio').append("You got it!");
             $('#pictureFeedback').attr('src', 'images/correct.png');
-        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');;}
+            $('button').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p5Object.display();
+            });
+            //append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
     }
 }
 //Run the display function for the correct year group:
