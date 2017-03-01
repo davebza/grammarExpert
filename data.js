@@ -20,7 +20,7 @@ function shuffle(array) {
 
 var p2Object = {
 	"questionsAndAnswers" : [{
-		"question": "What does the sign say?<img src='images/pickFlowers.png' style='max-height: 150px;'>",
+		"question": "What does the sign say?<img src='images/pickFlowers.png' style='max-height: 120px;'>",
 		"answers": ["Don’t pick the flowers.", "Keep quiet.", "Keep off the grass.", "No spitting."]
 	}, {
 		"question": "You must ____ at the bus stop.",
@@ -29,7 +29,7 @@ var p2Object = {
 		"question": "You must wait ___ your turn in the computer room.",
 		"answers": ["for", "on", "to", "at"]
 	}, {
-	    "question" : "What housework does Peter do?<img src='images/waterPlants.png' style='max-height: 150px;'>",
+	    "question" : "What housework does Peter do?<img src='images/waterPlants.png' style='max-height: 120px;'>",
 	    "answers" : ["He waters the plants.", "He sweeps the floor.", "He sets the table.", "He hangs up the washing."]
 	}, {
 	    "question" : "Which sentence is correct?",
@@ -65,7 +65,7 @@ var p2Object = {
 			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
 		}
         //Make a button to submit the form:
-        $('.button-area').append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
         //Check the answer submitted:
         $('button').click(function(){
             var studentInput = $("input[name='studentAnswer']:checked").val();
@@ -78,7 +78,7 @@ var p2Object = {
 	}, checkAnswer : function(studentInput, correctAnswer) {
         if (studentInput === correctAnswer){
             $('#pictureFeedback').attr('src', 'images/correct.png');
-            $('button').remove();
+            $('#button-submit').remove();
             $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
             $('#button-new-word').click(function(){
                 $('#question').empty();
@@ -138,7 +138,7 @@ var p5Object = {
 			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
 		}
         //Make a button to submit the form:
-        $('.button-area').append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
         //Check the answer submitted:
         $('button').click(function(){
             var studentInput = $("input[name='studentAnswer']:checked").val();
@@ -151,7 +151,7 @@ var p5Object = {
 	}, checkAnswer : function(studentInput, correctAnswer) {
         if (studentInput === correctAnswer){
             $('#pictureFeedback').attr('src', 'images/correct.png');
-            $('button').remove();
+            $('#button-submit').remove();
             $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
             $('#button-new-word').click(function(){
                 $('#question').empty();
@@ -164,4 +164,22 @@ var p5Object = {
     }
 }
 //Run the display function for the correct year group:
-p2Object.display();
+//p2Object.display();
+
+//add event listeners for the buttons, to call the relevant display functio for the objects:
+$('#button-p2').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p2Object.display();
+});
+$('#button-p5').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p5Object.display();
+});
