@@ -18,6 +18,79 @@ function shuffle(array) {
     return array;
 }
 
+var p2Object = {
+	"questionsAndAnswers" : [{
+		"question": "What does the sign say?<img src='images/pickFlowers.png' style='max-height: 150px;'>",
+		"answers": ["Don’t pick the flowers.", "Keep quiet.", "Keep off the grass.", "No spitting."]
+	}, {
+		"question": "You must ____ at the bus stop.",
+		"answers": ["line up", "sit still", "litter", "keep off the grass"]
+	}, {
+		"question": "You must wait ___ your turn in the computer room.",
+		"answers": ["for", "on", "to", "at"]
+	}, {
+	    "question" : "What housework does Peter do?<img src='images/waterPlants.png' style='max-height: 150px;'>",
+	    "answers" : ["He waters the plants.", "He sweeps the floor.", "He sets the table.", "He hangs up the washing."]
+	}, {
+	    "question" : "Which sentence is correct?",
+	    "answers" : ["She folds the clothes.", "He fold the clothes.", "I folds the clothes.", "They folds the clothes."]
+	}, {
+	    "question" : "Sally helps at home every day. She is ___.",
+	    "answers" : ["helpful", "honest", "polite", "lazy"]
+	}, {
+	    "question" : "Ben is polite. He ___.",
+	    "answers" : ["says ‘please’ and ‘thank you’", "tells lies", "plays computer games", "pushes other boys"]
+	}, {
+	    "question" : "Tom ___ every day.",
+	    "answers" : ["studies", "study", "studys", "studyes"]
+	}],
+	display : function() {
+		//Get random number equal to length of array (number of Q&A pairs)
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
+		//get the question and the answer set:
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
+		}
+        //Make a button to submit the form:
+        $('.button-area').append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        //Check the answer submitted:
+        $('button').click(function(){
+            var studentInput = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (studentInput){
+                //If yes, check the answer:
+                p2Object.checkAnswer(studentInput, correctAnswer);
+            }
+        });
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        if (studentInput === correctAnswer){
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+            $('button').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p2Object.display();
+            });
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
+    }
+}
+
 var p5Object = {
 	"questionsAndAnswers" : [{
 		"question": "Ms. Chan _____________ a concert in England two years ago.",
@@ -74,7 +147,6 @@ var p5Object = {
                 //If yes, check the answer:
                 p5Object.checkAnswer(studentInput, correctAnswer);
             }
-            //else {$('#answer-radio').append("<p>Please choose an answer</p>");}
         });
 	}, checkAnswer : function(studentInput, correctAnswer) {
         if (studentInput === correctAnswer){
@@ -88,9 +160,8 @@ var p5Object = {
                 $('#button-new-word').remove();
                 p5Object.display();
             });
-            //append('<button type="button" id="button" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
         } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
     }
 }
 //Run the display function for the correct year group:
-p5Object.display();
+p2Object.display();
