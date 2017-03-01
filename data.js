@@ -47,7 +47,7 @@ var p5Object = {
 	display : function() {
 		//Get random number equal to length of array (number of Q&A pairs)
 		var randomLimit = (this.questionsAndAnswers.length);
-		var randomIndex = Math.floor(Math.random()* randomLimit);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
 		//get the question and the answer set:
 		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
 		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
@@ -68,18 +68,20 @@ var p5Object = {
         $('form').append('<button type="button" id="button">Click</button>');
         //Check the answer submitted:
         $('button').click(function(){
-            var radioValue = $("input[name='studentAnswer']:checked").val();
+            var studentInput = $("input[name='studentAnswer']:checked").val();
             //First, check if the form is valid:
-            if (radioValue){
+            if (studentInput){
                 //If yes, check the answer:
-                $('#answer-radio').append("<p>Here is your answer: " + radioValue+"</p>");
-                $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
-                if (radioValue === correctAnswer){
-                    $('#answer-radio').append("You got it!");
-                } else {$('#answer-radio').append("That's not correct. Try again.");}
+                p5Object.checkAnswer(studentInput, correctAnswer);
             } else {$('#answer-radio').append("<p>Please choose an answer</p>");}
         });
-	}
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        $('#answer-radio').append("<p>Here is your answer: " + studentInput+"</p>");
+        $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
+        if (studentInput === correctAnswer){
+            $('#answer-radio').append("You got it!");
+        } else {$('#answer-radio').append("That's not correct. Try again.");}
+    }
 }
 //Run the display function for the correct year group:
 p5Object.display();
