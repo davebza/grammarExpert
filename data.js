@@ -35,7 +35,7 @@ var p5Object = {
 	    "question" : "Tom has been an animator ______ 1989.",
 	    "answers" : ["since", "for", "in", "ago"]
 	}, {
-	    "question" : "Mum asked '______ you ______ your lunch yet?'",
+	    "question" : "Mum asked:'H______ you ______ your lunch yet?'",
 	    "answers" : ["have...had", "did...have", "did...had", "have...have"]
 	}, {
 	    "question" : "Kelly won the best singer award ____ 2007.",
@@ -56,16 +56,16 @@ var p5Object = {
 		var shuffledArray = currentAnswerArray.slice();
 		shuffledArray = shuffle(shuffledArray);
 		//Append the question to the DOM element:
-		$('#question').append(currentQuestion);
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
 		//make the radio buttons from the shuffled array:
 		for (var i = 0; i< shuffledArray.length; i++){
 			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
 			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
 			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
-			$('#answer-radio').append(currentOption);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
 		}
         //Make a button to submit the form:
-        $('form').append('<button type="button" id="button">Click</button>');
+        $('form').append('<button type="button" id="button" class="btn btn-success">OK!</button>');
         //Check the answer submitted:
         $('button').click(function(){
             var studentInput = $("input[name='studentAnswer']:checked").val();
@@ -73,14 +73,16 @@ var p5Object = {
             if (studentInput){
                 //If yes, check the answer:
                 p5Object.checkAnswer(studentInput, correctAnswer);
-            } else {$('#answer-radio').append("<p>Please choose an answer</p>");}
+            }
+            //else {$('#answer-radio').append("<p>Please choose an answer</p>");}
         });
 	}, checkAnswer : function(studentInput, correctAnswer) {
-        $('#answer-radio').append("<p>Here is your answer: " + studentInput+"</p>");
-        $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
+        //$('#answer-radio').append("<p>Here is your answer: " + studentInput+"</p>");
+        // $('#answer-radio').append("<p>The correct answer is: " + correctAnswer +"</p>");
         if (studentInput === correctAnswer){
-            $('#answer-radio').append("You got it!");
-        } else {$('#answer-radio').append("That's not correct. Try again.");}
+            //$('#answer-radio').append("You got it!");
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');;}
     }
 }
 //Run the display function for the correct year group:
