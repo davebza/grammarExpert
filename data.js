@@ -18,6 +18,79 @@ function shuffle(array) {
     return array;
 }
 
+var p1Object = {
+	"questionsAndAnswers" : [{
+		"question": "Mr Man is my class teacher. ____ is nice.",
+		"answers": ["He", "She", "It", "They"]
+	}, {
+        "question": "Miss Tam is my English teacher. _____ is beautiful.",
+		"answers": ["She", "We", "He", "They"]
+	}, {
+        "question": "Peter is my friend. ____ is nine years old.",
+		"answers": ["He", "They", "She", "It"]
+	}, {
+        "question": "Sally is my classmate. ____ is helpful.",
+		"answers": ["She", "It", "We", "He"]
+	}, {
+        "question": "Sandy and Amy are good friends. ______ are in Class 3B. ",
+		"answers": ["They", "She", "We", "I"]
+	}, {
+        "question": "Peter is my classmate. _______ are in Class 1B. ",
+		"answers": ["We", "He", "I", "They"]
+	}, {
+        "question": "My father is a Chinese teacher. ______ is kind.",
+		"answers": ["He", "They", "She", "I"]
+	}, {
+        "question": "Amy is my sister. _____ is naughty. ",
+		"answers": ["She ", "He", "It", "We"]
+	}],
+	display : function() {
+		//Get random number equal to length of array (number of Q&A pairs)
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
+		//get the question and the answer set:
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
+		}
+        //Make a button to submit the form:
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        //Check the answer submitted:
+        $('button').click(function(){
+            var studentInput = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (studentInput){
+                //If yes, check the answer:
+                p1Object.checkAnswer(studentInput, correctAnswer);
+            }
+        });
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        if (studentInput === correctAnswer){
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+            $('#button-submit').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p1Object.display();
+            });
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
+    }
+}
+
 var p2Object = {
 	"questionsAndAnswers" : [{
 		"question": "What does the sign say?<img src='images/pickFlowers.png' style='max-height: 120px;'>",
