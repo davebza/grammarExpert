@@ -313,6 +313,14 @@ var p5Object = {
 //p2Object.display();
 
 //add event listeners for the buttons, to call the relevant display functio for the objects:
+$('#button-p1').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p1Object.display();
+});
 $('#button-p2').click(function(){
     $('#question').empty();
     $('#answer-radio').empty();
