@@ -237,6 +237,79 @@ var p3Object= {
     }
 }
 
+var p4Object = {
+	"questionsAndAnswers" : [{
+		"question": "Where can you watch the birds?",
+		"answers": ["Mai Po", "Tsim Sha Tsui", "The Peak", "Wan Chai"]
+	}, {
+		"question": "I want to eat seafood. Where can I go ?",
+		"answers": ["Aberdeen", "Tsim Sha Tsui", "Lantau", "Mai Po"]
+	}, {
+		"question": "Where is Hong Kong Wetland Park?",
+		"answers": ["in Tin Shui Wai", "in Tuen Mun", "in Tsuen Wan", "in Mongkok"]
+	}, {
+	    "question" : "Where is Aberdeen?",
+	    "answers" : ["on Hong Kong Island", "in Kowloon", "in the New Territories", "on the outlying islands"]
+	}, {
+	    "question" : "What can we do on the Avenue of Stars?",
+	    "answers" : ["take photos", "watch the birds", "eat seafood", "ride on the cable car"]
+	}, {
+	    "question" : " Where is Disneyland?",
+	    "answers" : ["on Lantau Island", "in Tsim Sha Tsui", "in Sai Kung", "in Yuen Long"]
+	}, {
+	    "question" : "What can people do in Sai Kung?",
+	    "answers" : ["do water sports", "visit the theme park", "ride on the cable car", "go on rides"]
+	}, {
+	    "question" : "Which of the following places is in Kowloon?",
+	    "answers" : ["Tsim Sha Tsui", "Sai Kung", "Aberdeen", "The Peak"]
+	}],
+	display : function() {
+		//Get random number equal to length of array (number of Q&A pairs)
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
+		//get the question and the answer set:
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
+		}
+        //Make a button to submit the form:
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        //Check the answer submitted:
+        $('button').click(function(){
+            var studentInput = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (studentInput){
+                //If yes, check the answer:
+                p4Object.checkAnswer(studentInput, correctAnswer);
+            }
+        });
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        if (studentInput === correctAnswer){
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+            $('#button-submit').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p4Object.display();
+            });
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
+    }
+}
+
 var p5Object = {
 	"questionsAndAnswers" : [{
 		"question": "Ms. Chan _____________ a concert in England two years ago.",
@@ -309,8 +382,6 @@ var p5Object = {
         } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
     }
 }
-//Run the display function for the correct year group:
-//p2Object.display();
 
 //add event listeners for the buttons, to call the relevant display functio for the objects:
 $('#button-p1').click(function(){
@@ -337,6 +408,14 @@ $('#button-p3').click(function(){
     $('#button-submit').remove();
     p3Object.display();
 });
+$('#button-p4').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p4Object.display();
+});
 $('#button-p5').click(function(){
     $('#question').empty();
     $('#answer-radio').empty();
@@ -344,4 +423,12 @@ $('#button-p5').click(function(){
     $('#button-new-word').remove();
     $('#button-submit').remove();
     p5Object.display();
+});
+$('#button-p6').click(function(){
+    $('#question').empty();
+    $('#answer-radio').empty();
+    $('#pictureFeedback').attr('src', 'images/question.png');
+    $('#button-new-word').remove();
+    $('#button-submit').remove();
+    p6Object.display();
 });
