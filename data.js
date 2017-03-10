@@ -383,6 +383,79 @@ var p5Object = {
     }
 }
 
+var p6Object = {
+	"questionsAndAnswers" : [{
+		"question": "I have an eye but cannot see. What am I?",
+		"answers": ["A needle", "An owl", "A boy", "A clock"]
+	}, {
+		"question": "I have a green house. Inside my green house, I have a white house. Inside my white house, I have a red house. Inside my red  house I have a lot of children. What am I?",
+		"answers": ["A watermelon", "A building", "A mother", "A bee"]
+	}, {
+		"question": "If you have me, you want to share me. If you share me, you haven’t got me. What am I?",
+		"answers": ["A secret", "Air", "A ring", "A watch"]
+	}, {
+	    "question" : "You feed me and I live. If you give me a drink then I'll die. What am I?",
+	    "answers" : ["Fire", "A puppy", "A baby", "A shell"]
+	}, {
+	    "question" : "Take off my skin- I won’t cry, but you will. What am I?",
+	    "answers" : ["An onion", "A pear", "A lemon", "A banana"]
+	}, {
+	    "question" : "Everyone in the world breaks every time they speak. What am I?",
+	    "answers" : ["Silence", "A window", "A promise", "A rule"]
+	}, {
+	    "question" : "You always make more of us, but leave more of us behind you. The more you make, the more you leave behind. What am I?",
+	    "answers" : ["Footprints", "Rubbish", "Paper", "Sand"]
+	}, {
+	    "question" : "I have a face and two hands but I have no arms or legs. What am I?",
+	    "answers" : ["A clock", "A hammer", "A dog", "A boy"]
+	}],
+	display : function() {
+		//Get random number equal to length of array (number of Q&A pairs)
+		var randomLimit = (this.questionsAndAnswers.length);
+		var randomIndex = Math.floor(Math.random() * randomLimit);
+		//get the question and the answer set:
+		var currentQuestion = this.questionsAndAnswers[randomIndex].question;
+		var currentAnswerArray = this.questionsAndAnswers[randomIndex].answers;
+		var correctAnswer = currentAnswerArray[0];
+		//copy the array and shuffle it for the randomness:
+		var shuffledArray = currentAnswerArray.slice();
+		shuffledArray = shuffle(shuffledArray);
+		//Append the question to the DOM element:
+		$('#question').append("<h1>"+currentQuestion+"</h1>");
+		//make the radio buttons from the shuffled array:
+		for (var i = 0; i< shuffledArray.length; i++){
+			var baseRadioString = '<input type="radio" name="studentAnswer" value="%replaceThis%"> %replaceThis%';
+			var currentOption = baseRadioString.replace("%replaceThis%", shuffledArray[i]);
+			currentOption = currentOption.replace("%replaceThis%", shuffledArray[i]);
+			$('#answer-radio').append("<h1>"+currentOption+"</h1>");
+		}
+        //Make a button to submit the form:
+        $('.button-area').append('<button type="button" id="button-submit" class="btn btn-success btn-lg">OK! Let\'s check!</button>');
+        //Check the answer submitted:
+        $('button').click(function(){
+            var studentInput = $("input[name='studentAnswer']:checked").val();
+            //First, check if the form is valid:
+            if (studentInput){
+                //If yes, check the answer:
+                p6Object.checkAnswer(studentInput, correctAnswer);
+            }
+        });
+	}, checkAnswer : function(studentInput, correctAnswer) {
+        if (studentInput === correctAnswer){
+            $('#pictureFeedback').attr('src', 'images/correct.png');
+            $('#button-submit').remove();
+            $('.button-area').append('<button type="button" id="button-new-word" class="btn btn-primary btn-lg">I want a new question!</button>');
+            $('#button-new-word').click(function(){
+                $('#question').empty();
+                $('#answer-radio').empty();
+                $('#pictureFeedback').attr('src', 'images/question.png');
+                $('#button-new-word').remove();
+                p6Object.display();
+            });
+        } else {$('#pictureFeedback').attr('src', 'images/wrong.png');}
+    }
+}
+
 //add event listeners for the buttons, to call the relevant display functio for the objects:
 $('#button-p1').click(function(){
     $('#question').empty();
